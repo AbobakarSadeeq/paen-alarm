@@ -1,0 +1,65 @@
+@charset "utf-8";
+
+
+
+.clockAnimation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 240px;
+  height: 240px;
+}
+.clockAnimation .alarm-clock {
+  width: 180px;
+}
+.clockAnimation .alarm-clock {
+  animation: shake .1s ease-in-out infinite;
+}
+.clockAnimation .sound-01 {
+  position: absolute;
+  top: 5px;
+  left: 0;
+  width: 40px;
+  opacity: 0;
+}
+.clockAnimation .sound-02 {
+  position: absolute;
+  top: 5px;
+  right: 0;
+  width: 40px;
+  opacity: 0;
+}
+.clockAnimation .sound-01,
+.clockAnimation .sound-02 {
+  opacity: 1;
+  animation: sound .1s ease-in-out infinite;
+}
+@keyframes shake {
+  0% {
+    transform: rotate(-15deg);
+  }
+  100% {
+    transform: rotate(15deg);
+  }
+}
+@keyframes sound {
+  0% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(5deg);
+  }
+}
+
+@media screen and (max-width: 480px) {
+
+  .clockAnimation {
+    width: 200px;
+    height: 200px;
+  }
+  .clockAnimation .alarm-clock {
+    width: 140px;
+  }
+
+}

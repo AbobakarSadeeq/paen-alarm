@@ -1,0 +1,104 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <div style="text-align: center; margin-top: 140px;">
+        <h1 style="font-size: 4.5em;">Set Alarm</h1><br>
+        <span style="font-size: 150px;">{{currentTime}}</span><br>
+        <button class="btn btn-warning btn-lg" (click)="showDialog()">
+          <i class="fas fa-clock"></i>
+          Add Alarm
+        </button>
+      </div>
+
+      <!-- After timing section -->
+      <p style="font-size: 25px;">
+        <span style="border-bottom: 1px solid white;">
+          <b style="font-size: 30x;">List Alarm's</b>
+        </span>
+      </p>
+
+
+      <div *ngFor="let singleAlarm of alarmUsed; let i = index">
+        <hr>
+        <i class="pi pi-times" (click)="deleteAlarm(i)" style="cursor: pointer; float: right;"></i>
+        <mat-slide-toggle (change)="onChangedAlarm(i)" [checked]="singleAlarm?.setAlarm"
+          style="float: right; margin-top: 15px;margin-right: 22px;"></mat-slide-toggle>
+        <p style="font-size: 35px;">{{singleAlarm?.alarmTime}}</p>
+        <span><b>Ringtone:</b> {{singleAlarm.alarmTone}}</span>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- Dialog Open View -->
+
+<p-dialog header="Alarm Clock" (onHide)="closeModel()" [(visible)]="displayModal" [modal]="true"
+  [style]="{width: '30vw', 'background-color':'green'}" [draggable]="false" [resizable]="false">
+  <div class="row">
+    <!-- hour's -->
+
+    <div class="col-3">
+      <label><strong>Hour: &nbsp;</strong></label>
+      <input type="number" #hourInput min="0" max="12" class="form-control" value="1" style="width:60px;">
+    </div>
+
+    <!-- Minutes -->
+    <div class="col-3">
+      <label><strong>Minute: &nbsp;</strong></label>
+      <input type="number" #minuteInput min="0" max="60" class="form-control" value="00" style="width:60px;">
+    </div>
+
+    <!-- MidDay or MidNight -->
+    <div class="col-3">
+      <label><strong>Day or Night: &nbsp;</strong></label>
+      <select class="form-select" #dayOrNightInput>
+        <option selected>AM</option>
+        <option>PM</option>
+      </select>
+    </div>
+
+  </div>
+
+  <!-- Ringtones -->
+
+  <br>
+  <div>
+
+
+    <label><strong>Ringtones: &nbsp;</strong></label>
+    <select #ringSelected style="width: 260px;" class="form-select" ngModel [(ngModel)]="selectedData"
+      (change)="adjustRingtone($event)">
+      <option disabled [value]="null">-----Select Ringtone-----</option>
+      <option *ngFor="let item of ringToneList" [value]="item?.ringUrl">{{item?.ringName}}</option>
+    </select>
+  </div>
+
+
+
+
+
+  <ng-template pTemplate="footer">
+    <button class="btn bg-light" (click)="closeModel()">cancel</button>
+    <button class="btn btn-primary" (click)="saveAlarm()">Save</button>
+  </ng-template>
+</p-dialog>
+
+
+<!-- alarm bell model -->
+
+<p-dialog header="Alarm Clock" [(visible)]="timeUpAlarmModel" (onHide)="turnOffAlarm()" [modal]="true"
+  [style]="{width: '22vw', height:'23 vw', 'background-color':'green'}" [draggable]="false" [resizable]="false">
+  <p>Time's Up!</p>
+  <div class="clockAnimation" style="margin-right: 0px;margin-left: 58px;">
+    <img class="alarm-clock" src="../../assets/pictures/alarmClock.jpg" alt="">
+  </div>
+
+  <ng-template pTemplate="footer">
+    <button class="btn btn-success" (click)="turnOffAlarm()">Turn off!</button>
+  </ng-template>
+</p-dialog>
